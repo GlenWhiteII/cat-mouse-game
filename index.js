@@ -3,122 +3,140 @@ const c = canvas.getContext('2d');
 canvas.width = 600;
 canvas.height = 600;
 
+
 const mouseImage = new Image();
-mouseImage.src = "./images/mouse-character-removebg-preview.png"; // Replace 'path_to_mouse_image' with the actual path to your mouse image
+mouseImage.src = "./images/mouse-character-removebg-preview.png"; 
 
 const catImage = new Image();
-catImage.src = "./images/cat-character-removebg-preview.png"; // Replace 'path_to_cat_image' with the actual path to your cat image
+catImage.src = "./images/cat-character-removebg-preview.png"; 
 
 const cheeseImage = new Image();
-cheeseImage.src = "./images/cheese-character-removebg-preview.png"; // Replace 'path_to_cheese_image' with the actual path to your cheese image
+cheeseImage.src = "./images/cheese-character-removebg-preview.png"; 
 
+const mouseHoleImage = new Image();
+mouseHoleImage.src = "./images/mousehole-image.jpg";
 const cellSize = 100;
 const rows = 6;
 const cols = 6;
 
 const board = [];
-console.log(board);
+
 for (let i = 0; i < rows; i++) {
     const row = [];
     for (let j = 0; j < cols; j++) {
-        row.push({ revealed: false, hasCat: false });
+        row.push({
+            revealed: false,
+            hasCat: false,
+            hasCheese: false,
+            hasMouse: false
+        });
     }
     board.push(row);
-}
+};
+board[0][0].revealed = true;
+
+let mouseHolePosition = {
+    x: 5,
+    y: 5
+};
 
 let mousePosition = {
     x: 0,
-    y: 0,
+    y: 0
 };
-
-board[mousePosition.y][mousePosition.x].revealed = true;
 
 let catPosition = {
     x: Math.floor(Math.random() * cols),
-    y: Math.floor(Math.random() * rows),
-};
+    y: Math.floor(Math.random() * rows)
+}
+
+let catTwoPosition = {
+    x: Math.floor(Math.random() * cols),
+    y: Math.floor(Math.random() * rows)
+}
 
 let cheesePosition = {
     x: Math.floor(Math.random() * cols),
-    y: Math.floor(Math.random() * rows),
+    y: Math.floor(Math.random() * rows)
+}
+
+function cheeseFix() {
+    if (cheesePosition.x === catPosition.x && cheesePosition.y === catPosition.x) {
+        cheesePosition.x = Math.floor(Math.random() * cols),
+        cheesePosition.y = Math.floor(Math.random() * rows),
+        console.log('Wow, it really happened');
+    }
+}
+cheeseFix();
+
+
+console.log(board);
+console.log(board.length);
+
+board[catPosition.x][catPosition.y].hasCat = true;
+board[catTwoPosition.x][catTwoPosition.y].hasCat = true;
+board[cheesePosition.x][cheesePosition.y].hasCheese = true;
+console.log(catPosition);
+console.log(cheesePosition);
+console.log(board);
+
+function mouseMotion() {
+    c.drawImage(mouseImage, mousePosition.x * cellSize, mousePosition.y * cellSize, cellSize, cellSize)
+    c.fillStyle = board[mousePosition.x][mousePosition.y].hasCat ? "red" : (board[mousePosition.x][mousePosition.y].hasCheese ? "yellow" : "lightgrey");
+    if (board[mousePosition.x][mousePosition.y].hasCat === true) {
+        console.log('found cat');
+        c.drawImage(catImage, catPosition.x * cellSize, catPosition.y * cellSize, cellSize, cellSize);
+
+    } else if (board[mousePosition.x][mousePosition.y].hasCheese === true) {
+        c.drawImage(cheeseImage, cheesePosition.x * cellSize, cheesePosition.y * cellSize, cellSize, cellSize);
+        console.log('found cheese');
+    } else {
+        console.log(board[mousePosition.x][mousePosition.y]);
+        console.log(board[catPosition.x][catPosition.y]);
+    }
 };
 
-while (catPosition.x === cheesePosition.x && catPosition.y === cheesePosition.y) {
-    cheesePosition = {
-        x: Math.floor(Math.random() * cols),
-        y: Math.floor(Math.random() * rows),
-    };
-}
-
-board[catPosition.y][catPosition.x].hasCat = true;
-board[cheesePosition.y][cheesePosition.x].hasCheese = true;
-
-function revealSpace(x, y) {
-    if (!board[y][x].revealed) {
-        board[y][x].revealed = true;
-        c.fillStyle = board[y][x].hasCat ? "red" : (board[y][x].hasCheese ? "yellow" : "lightgrey");
-        c.fillRect(x * cellSize, y * cellSize, cellSize, cellSize)
-        if (board[y][x].hasCat === true) {
-            c.drawImage(catImage, x * cellSize, y * cellSize, cellSize, cellSize);
-        }
-        if (board[y][x].hasCheese === true) {
-            c.drawImage(cheeseImage, x * cellSize, y * cellSize, cellSize, cellSize);
-        }
-    }
-}
-
-document.addEventListener("keydown", function(event) {
-    const key = event.key.toLowerCase();
-    switch (key) {
-        case "w":
-            if (mousePosition.y > 0) {
-                mousePosition.y--;
-                revealSpace(mousePosition.x, mousePosition.y);
-                c.drawImage(mouseImage);
-            }
-            break; 
-        case "a":
-            if (mousePosition.x > 0) {
-                mousePosition.x--;
-                revealSpace(mousePosition.x, mousePosition.y);
-                c.drawImage(mouseImage);
-            }
-            break;
-        case "s":
-            if (mousePosition.y < rows - 1) {
-                mousePosition.y++;
-                revealSpace(mousePosition.x, mousePosition.y);
-                c.drawImage(mouseImage);    
-            }
-            break;
-        case "d":
-            if (mousePosition.x < cols - 1) {
-                mousePosition.x++;
-                revealSpace(mousePosition.x, mousePosition.y);
-                
-            }    
-            break;
-    }
-
-    if (mousePosition.x === catPosition.x && mousePosition.y === catPosition.y) {
-        alert("Oh No! You've been caught!");
-    } else if (mousePosition.x === cols - 1 && mousePosition.y === rows - 1) {
-        alert("You got the Cheese!");
-    } else if (mousePosition.x === cheesePosition.x && mousePosition.y === cheesePosition.y) {
-        alert("Got the Cheese! Now head home!");
-    }
-});
-
 function drawBoard() {
-    for (let y = 0; y < rows; y++) {
-        for (let x = 0; x < cols; x++) {
-            c.fillStyle = "gray";
-            c.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
-            c.strokeStyle = "black";
-            c.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            c.fillStyle = 'white';
+            c.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
+            c.strokeStyle = 'black';
+            c.strokeRect(i * cellSize, j * cellSize, cellSize, cellSize);
         }
     }
-    // Draw the initial positions of mouse, cat, and cheese
     c.drawImage(mouseImage, mousePosition.x * cellSize, mousePosition.y * cellSize, cellSize, cellSize);
+    c.drawImage(mouseHoleImage, mouseHolePosition.x * cellSize, mouseHolePosition.y * cellSize, cellSize, cellSize);
 }
+
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'w' || e.key === 'W') {
+        mousePosition.y--;
+        mouseMotion();
+        console.log(mousePosition);
+        console.log(board);
+        drawBoard();
+    } else if (e.key === 'a' || e.key === 'A') {
+        mousePosition.x--;
+        
+        mouseMotion();
+        console.log(mousePosition);
+        drawBoard();
+    } else if (e.key === 's' || e.key === 'S') {
+        mousePosition.y++;
+        
+        mouseMotion();
+        console.log(mousePosition);
+        drawBoard();
+    } else if (e.key === 'd' || e.key === 'D') {
+        mousePosition.x++;
+        
+        mouseMotion();
+        console.log(mousePosition);
+        drawBoard();
+    }
+})
+
 drawBoard();
+

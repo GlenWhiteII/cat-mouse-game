@@ -10,10 +10,10 @@ body {
   background-size: cover;
   background-repeat: space;
 }
-
-#mouse,
 #cat,
-#cheese {
+#mouse,
+#cheese,
+#mousehole {
   display: none;
 }
 .canvas-container {
