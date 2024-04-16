@@ -105,6 +105,10 @@ function drawBoard() {
             c.strokeRect(i * cellSize, j * cellSize, cellSize, cellSize);
         }
     }
+<<<<<<< HEAD
+=======
+   
+>>>>>>> 490cf9f8a509ab8e51d7951cfea80a3102345de5
     c.drawImage(mouseImage, mousePosition.x * cellSize, mousePosition.y * cellSize, cellSize, cellSize);
     c.drawImage(mouseHoleImage, mouseHolePosition.x * cellSize, mouseHolePosition.y * cellSize, cellSize, cellSize);
 }
