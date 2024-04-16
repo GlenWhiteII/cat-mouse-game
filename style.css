@@ -1,0 +1,28 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+body {
+  padding-top: 1rem;
+  text-align: center;
+  background-color: rgb(97, 131, 126);
+  background-size: cover;
+  background-repeat: space;
+}
+
+#mouse,
+#cat,
+#cheese {
+  display: none;
+}
+.canvas-container {
+  width: 100%;
+  height: 400px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+canvas {
+  border: dotted black;
+}
