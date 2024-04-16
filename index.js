@@ -4,13 +4,13 @@ canvas.width = 600;
 canvas.height = 600;
 
 const mouseImage = new Image();
-mouseImage.src = "./images/mouse-character-removebg-preview.png"; // Replace 'path_to_mouse_image' with the actual path to your mouse image
+mouseImage.src = "./images/mouse-character-removebg-preview.png"; 
 
 const catImage = new Image();
-catImage.src = "./images/cat-character-removebg-preview.png"; // Replace 'path_to_cat_image' with the actual path to your cat image
+catImage.src = "./images/cat-character-removebg-preview.png"; 
 
 const cheeseImage = new Image();
-cheeseImage.src = "./images/cheese-character-removebg-preview.png"; // Replace 'path_to_cheese_image' with the actual path to your cheese image
+cheeseImage.src = "./images/cheese-character-removebg-preview.png"; 
 
 const cellSize = 100;
 const rows = 6;
@@ -118,7 +118,7 @@ function drawBoard() {
             c.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
         }
     }
-    // Draw the initial positions of mouse, cat, and cheese
+   
     c.drawImage(mouseImage, mousePosition.x * cellSize, mousePosition.y * cellSize, cellSize, cellSize);
 }
 drawBoard();
