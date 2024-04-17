@@ -24,6 +24,7 @@ const foundCath1 = document.getElementById('foundCat');
 foundCath1.appendChild(catImage);
 foundCath1.style.display = 'none';
 catImage.setAttribute('id', 'cat-image');
+
 const foundCheeseh1 = document.getElementById('foundCheese');
 foundCheeseh1.appendChild(cheeseImage);
 foundCheeseh1.style.display = 'none';
@@ -102,20 +103,31 @@ board[catPosition.x][catPosition.y].hasCat = true;
 board[catTwoPosition.x][catTwoPosition.y].hasCat = true;
 board[cheesePosition.x][cheesePosition.y].hasCheese = true;
 // ---------------------------------------------------------------------------
-
+let winArray = [];
 function mouseMotion() {
     if (mousePosition.x === catPosition.x && mousePosition.y === catPosition.y) {
         console.log('Caught by the cat!');
         foundCath1.style.display = 'block';
+        alert('Caught by the cat!');
     } else if (mousePosition.x === catTwoPosition.x && mousePosition.y === catTwoPosition.y) {
         console.log('Caught by the cat!'); 
         foundCath1.style.display = 'block';
+        alert('Caught by the cat!');
     } else if (mousePosition.x === cheesePosition.x && mousePosition.y === cheesePosition.y) {
         console.log('You found the cheese!');
         foundCheeseh1.style.display = 'block';
+        alert('You found the cheese! Make it home!');
+        let mouseArr = ['cheese'];
+        winArray.push(mouseArr);
+        console.log(winArray);
     } else if (mousePosition.x === mouseHolePosition.x && mousePosition.y === mouseHolePosition.y) {
         console.log('You made it home!');
         foundHoleh1.style.display = 'block';
+        if (winArray[0].includes('cheese')) {
+            alert('You Win! Congratulations!')
+        } else (
+            alert("Don't forget your cheese!")
+        )
     }
 }
 // Creating the game board

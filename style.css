@@ -26,7 +26,7 @@ body {
   justify-content: center;
 }
 canvas {
-  border: dotted black;
+  border: solid black;
 }
 #foundCat,
 #foundCheese {
