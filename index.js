@@ -23,9 +23,15 @@ const cols = 6;
 const foundCath1 = document.getElementById('foundCat');
 foundCath1.appendChild(catImage);
 foundCath1.style.display = 'none';
+catImage.setAttribute('id', 'cat-image');
 const foundCheeseh1 = document.getElementById('foundCheese');
 foundCheeseh1.appendChild(cheeseImage);
 foundCheeseh1.style.display = 'none';
+cheeseImage.setAttribute('id', 'cheese-image');
+const foundHoleh1 = document.getElementById('foundHome');
+foundHoleh1.appendChild(mouseHoleImage);
+foundHoleh1.style.display = 'none';
+mouseHoleImage.setAttribute('id', 'mousehole-image');
 
 const board = [];
 
@@ -109,6 +115,7 @@ function mouseMotion() {
         foundCheeseh1.style.display = 'block';
     } else if (mousePosition.x === mouseHolePosition.x && mousePosition.y === mouseHolePosition.y) {
         console.log('You made it home!');
+        foundHoleh1.style.display = 'block';
     }
 }
 // Creating the game board
