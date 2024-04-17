@@ -117,14 +117,14 @@ function mouseMotion() {
         console.log('You found the cheese!');
         foundCheeseh1.style.display = 'block';
         alert('You found the cheese! Make it home!');
-        let mouseArr = ['cheese'];
-        winArray.push(mouseArr);
-        console.log(winArray);
+        let cheese = 'cheese';
+        winArray.push(cheese);
+        console.log(winArray[0]);
     } else if (mousePosition.x === mouseHolePosition.x && mousePosition.y === mouseHolePosition.y) {
         console.log('You made it home!');
-        foundHoleh1.style.display = 'block';
-        if (winArray[0].includes('cheese')) {
+        if (winArray[0] == cheese) {
             alert('You Win! Congratulations!')
+            foundHoleh1.style.display = 'block';
         } else (
             alert("Don't forget your cheese!")
         )
@@ -191,4 +191,8 @@ document.addEventListener('keydown', function(e) {
 })
 // -------------------------------------------------------------------------
 
+// Restart Button until I find a better method
 
+function refreshPage() {
+    history.go(0);
+};

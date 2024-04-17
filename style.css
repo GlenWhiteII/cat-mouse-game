@@ -49,3 +49,18 @@ canvas {
   font-family: "Jersey 20", sans-serif;
   font-size: 3rem;
 }
+button {
+  padding: 10px;
+  margin: 20px;
+  border-radius: 15px;
+  border-color: black;
+  font-size: 30px;
+  font-family: "Jersey 20", sans-serif;
+  background-color: black;
+  color: white;
+}
+button:hover {
+  box-shadow: 0 5px 5px 0 teal;
+  cursor: pointer;
+  transition: 1s;
+}
