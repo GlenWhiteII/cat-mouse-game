@@ -40,7 +40,6 @@ for (let i = 0; i < rows; i++) {
     }
     board.push(row);
 };
-board[0][0].revealed = true;
 let mouseLives = 1;
 
 let mouseHolePosition = {
@@ -67,6 +66,8 @@ let cheesePosition = {
     x: Math.floor(Math.random() * cols),
     y: Math.floor(Math.random() * rows)
 }
+// Functions for potential malfunctions such as cats spawning in end goal position,
+// starting position, or cheese position
 
 function cheeseFix() {
     if (cheesePosition.x === catPosition.x && cheesePosition.y === catPosition.x) {
@@ -82,37 +83,35 @@ function endGoalFix() {
         catPosition.x = Math.floor(Math.random() * cols),
         catPosition.y = Math.floor(Math.random() * rows),
         console.log('Cat in end goal fixed');
-    } else if (catPosition.x === catTwoPosition.x && catPosition.y === catTwoPosition.y) {
+    } else if (catTwoPosition.x === mouseHolePosition.x && catTwoPosition.y === mouseHolePosition.y) {
         catTwoPosition.x = Math.floor(Math.random() * cols),
         catTwoPosition.y = Math.floor(Math.random() * rows)
     }
 }
 endGoalFix();
+// ---------------------------------------------------------------------------
 
-console.log(board);
-console.log(board.length);
-
+// Setting up the game board
 board[catPosition.x][catPosition.y].hasCat = true;
 board[catTwoPosition.x][catTwoPosition.y].hasCat = true;
 board[cheesePosition.x][cheesePosition.y].hasCheese = true;
-console.log(catPosition);
-console.log(cheesePosition);
-console.log(board);
+// ---------------------------------------------------------------------------
 
-function mouseMotion(x, y) {
-    if (!board[y][x].revealed) {
-        board[y][x].revealed = true;
-        c.fillStyle = board[y][x].hasCat ? "red" : (board[y][x].hasCheese ? "yellow" : "lightgrey");
-        c.fillRect(x * cellSize, y * cellSize, cellSize, cellSize)
-        if (board[y][x].hasCat === true) {
-            c.drawImage(catImage, x * cellSize, y * cellSize, cellSize, cellSize);
-        }
-        if (board[y][x].hasCheese === true) {
-            c.drawImage(cheeseImage, x * cellSize, y * cellSize, cellSize, cellSize);
-        }
+function mouseMotion() {
+    if (mousePosition.x === catPosition.x && mousePosition.y === catPosition.y) {
+        console.log('Caught by the cat!');
+        foundCath1.style.display = 'block';
+    } else if (mousePosition.x === catTwoPosition.x && mousePosition.y === catTwoPosition.y) {
+        console.log('Caught by the cat!'); 
+        foundCath1.style.display = 'block';
+    } else if (mousePosition.x === cheesePosition.x && mousePosition.y === cheesePosition.y) {
+        console.log('You found the cheese!');
+        foundCheeseh1.style.display = 'block';
+    } else if (mousePosition.x === mouseHolePosition.x && mousePosition.y === mouseHolePosition.y) {
+        console.log('You made it home!');
     }
 }
-
+// Creating the game board
 function drawBoard() {
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
@@ -124,39 +123,34 @@ function drawBoard() {
     }
     c.drawImage(mouseImage, mousePosition.x * cellSize, mousePosition.y * cellSize, cellSize, cellSize);
     c.drawImage(mouseHoleImage, mouseHolePosition.x * cellSize, mouseHolePosition.y * cellSize, cellSize, cellSize);
-    
-    
-}
-function endGame() {
-    document.removeEventListener('keydown', function(e) {
-        canvasMouseOver(e);
-    })
-}
+    }
+    drawBoard();
+// ------------------------------------------------------------------------------
 
-
+// Adding event listeners for mouse movement
 document.addEventListener('keydown', function(e) {
     if (e.key === 'w' || e.key === 'W') {
         mousePosition.y--;
-        mouseMotion(mousePosition.x, mousePosition.y);
+        mouseMotion();
         console.log(mousePosition);
         console.log(board);
         drawBoard();
     } else if (e.key === 'a' || e.key === 'A') {
         mousePosition.x--;
         
-        mouseMotion(mousePosition.x, mousePosition.y);
+        mouseMotion();
         console.log(mousePosition);
         drawBoard();
     } else if (e.key === 's' || e.key === 'S') {
         mousePosition.y++;
         
-        mouseMotion(mousePosition.x, mousePosition.y);
+        mouseMotion();
         console.log(mousePosition);
         drawBoard();
     } else if (e.key === 'd' || e.key === 'D') {
         mousePosition.x++;
         
-        mouseMotion(mousePosition.x, mousePosition.y);
+        mouseMotion();
         console.log(mousePosition);
         drawBoard();
     }
@@ -176,6 +170,6 @@ document.addEventListener('keydown', function(e) {
         c.drawImage(cheeseImage, cheesePosition.x * cellSize, cheesePosition.y * cellSize, cellSize, cellSize);
     }
 })
+// -------------------------------------------------------------------------
 
-drawBoard();
 
