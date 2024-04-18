@@ -103,33 +103,37 @@ board[catPosition.x][catPosition.y].hasCat = true;
 board[catTwoPosition.x][catTwoPosition.y].hasCat = true;
 board[cheesePosition.x][cheesePosition.y].hasCheese = true;
 // ---------------------------------------------------------------------------
-let winArray = [];
+let winCondition = 0;
 function mouseMotion() {
     if (mousePosition.x === catPosition.x && mousePosition.y === catPosition.y) {
         console.log('Caught by the cat!');
         foundCath1.style.display = 'block';
         alert('Caught by the cat!');
+        winCondition -= 2;
     } else if (mousePosition.x === catTwoPosition.x && mousePosition.y === catTwoPosition.y) {
         console.log('Caught by the cat!'); 
         foundCath1.style.display = 'block';
         alert('Caught by the cat!');
+        winCondition -= 2;
     } else if (mousePosition.x === cheesePosition.x && mousePosition.y === cheesePosition.y) {
         console.log('You found the cheese!');
         foundCheeseh1.style.display = 'block';
         alert('You found the cheese! Make it home!');
-        let cheese = 'cheese';
-        winArray.push(cheese);
-        console.log(winArray[0]);
+        winCondition += 1;
+        console.log(winCondition);
     } else if (mousePosition.x === mouseHolePosition.x && mousePosition.y === mouseHolePosition.y) {
         console.log('You made it home!');
-        if (winArray[0] == cheese) {
+        if (winCondition === 1) {
             alert('You Win! Congratulations!')
             foundHoleh1.style.display = 'block';
-        } else (
-            alert("Don't forget your cheese!")
-        )
+        } else if (winCondition < 0) {
+            alert('Press restart to try again!');
+        } else {
+            alert("Don't forget your cheese!");
+        }
     }
 }
+
 // Creating the game board
 function drawBoard() {
     for (let i = 0; i < rows; i++) {
@@ -181,10 +185,7 @@ document.addEventListener('keydown', function(e) {
         }
     } else if (mousePosition.x === catTwoPosition.x && mousePosition.y === catTwoPosition.y) {
         c.drawImage(catImage, catTwoPosition.x * cellSize, catTwoPosition.y * cellSize, cellSize, cellSize);
-        mouseLives = 0;
-        if (mouseLives = 0) {
-            endGame();
-        }
+        
     } else if (mousePosition.x === cheesePosition.x && mousePosition.y === cheesePosition.y) {
         c.drawImage(cheeseImage, cheesePosition.x * cellSize, cheesePosition.y * cellSize, cellSize, cellSize);
     }
@@ -196,3 +197,4 @@ document.addEventListener('keydown', function(e) {
 function refreshPage() {
     history.go(0);
 };
+// -------------------------------------------------------------------------
